@@ -13,6 +13,10 @@ angular
         return total / parts.length;
       }
 
+      function percentVolume(val) {
+        return  (val / 180) * 100;// max amplitude?
+      }
+
       function splitArr(freqs, barCount) {
         barCount = 8; // temp
         var arrCount = freqs.length / barCount;
@@ -20,6 +24,7 @@ angular
 
         for(var i=0; i<barCount; i++) {
           bars[i] = getAverages(freqs.slice(i * arrCount, i * arrCount + arrCount));
+          bars[i] = percentVolume(bars[i]);
         }
 
         return bars;
@@ -34,6 +39,7 @@ angular
         var ctx = new AudioContext();
         var audioSrc = ctx.createMediaElementSource(audio);
         var analyser = ctx.createAnalyser();
+        analyser.fftSize = 2048;
 
         audioSrc.connect(analyser);
         audioSrc.connect(ctx.destination);
@@ -68,9 +74,11 @@ angular
       template: '\
         <div class="bars">\
           <div ng-repeat="bar in bars track by $index">\
-            <div style="height: {{bar}}px"></div>\
+            <div style="height: {{bar}}%"></div>\
           </div>\
         </div>\
+        <br />\
+        <br />\
       '
     }
   })
