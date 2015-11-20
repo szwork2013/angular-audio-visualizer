@@ -1,0 +1,19 @@
+.bars {
+	height: 500px;
+}
+
+.bars > div {
+	height: 100%;
+	width: 20px;
+	float: left;
+	display: inline-block;
+	position: relative;
+}
+
+.bars > div > div {
+	position: absolute;
+	bottom: 0px;
+	left: 0px;
+	width: 100%;
+	background-color: orange;
+}

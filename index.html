@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head>
+	<title>audio api test</title>
+	<link rel="stylesheet" href="style.css" />
+</head>
+
+<body ng-app="myApp">
+
+<h1>HTML5 Audio visualizer</h1>
+<!--
+<div id="freqs"></div>
+-->
+<audio id="myAudio" src="anthem.mp3"></audio>
+
+<audio-visualizer	 audio-src-id="myAudio"></audio-visualizer>
+
+<script type="text/javascript" src="bower_components/angular/angular.min.js"></script>
+<script src="app.js"></script>
+<script src="audio.js"></script>
+
+<a href="#" onclick="start()">Start</a>
+<a href="#" onclick="stop()">Stop</a>
+
+
+</body>
+</html>
