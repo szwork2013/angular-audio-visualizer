@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+	<title>Angular HTML5 Audio visualizer demo</title>
+	<link rel="stylesheet" href="style.css" />
+	<link rel="stylesheet" href="../lib/audio.css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+</head>
+
+<body ng-app="myApp">
+
+	<h1>HTML5 Audio visualizer</h1>
+
+	<audio 
+		id="myAudio" 
+		src="anthem.mp3">
+	</audio>
+
+	<audio-visualizer
+		audio-src-id="myAudio">
+	</audio-visualizer>
+
+	<script type="text/javascript" src="../bower_components/angular/angular.min.js"></script>
+	<script src="app.js"></script>
+	<script src="../lib/audio.js"></script>
+
+	<a href="#" onclick="myAudio.start()" class="audio-action">
+		<i class="fa fa-play"></i> Start
+	</a>
+
+	<a href="#" onclick="myAudio.pause()" class="audio-action">
+		<i class="fa fa-pause"></i> Pause
+	</a>
+
+	<span id="currentTime"></span> /
+	<span id="duration"></span>
+
+	<script>
+		var audio = document.getElementById('myAudio');
+
+		/**
+		 * Adds leading '0' to a number.
+		 */
+		function ensureLeadingZero(num) {
+			return (num <= 9 ? '0' : '') + num;
+		}
+
+		/**
+		 * Renders user-friendly time in format: HH:MM:SS
+		 * @param  {Number} time  number of seconds
+		 * @return {String}       ui-friendly time
+		 */
+		function renderUiTime(time) {
+			var uiTime = '';
+	    var timeSec = Math.ceil(time % 60);
+	    var timeMin = Math.floor(timeSec / 60);
+	    var timeHrs = Math.floor(timeMin / 60);
+
+	    if(timeHrs > 0) {
+	    	uiTime += ensureLeadingZero(timeHrs);
+	    	uiTime += ':';
+	    	uiTime += ensureLeadingZero(timeMin);
+	    } else {
+	    	uiTime += timeMin;
+	    }
+	    uiTime += ':';
+	    uiTime += ensureLeadingZero(timeSec);
+
+	    return uiTime;
+		}
+
+		audio.addEventListener('loadeddata', function() {
+			console.log('duratino: ', audio.duration);
+		  document.getElementById('duration').innerHTML = renderUiTime(audio.duration);
+		});
+
+		audio.addEventListener('timeupdate', function() {
+	    document.getElementById('currentTime').innerHTML = renderUiTime(audio.currentTime);
+	    	
+		}, false);
+	</script>
+
+</body>
+</html>
